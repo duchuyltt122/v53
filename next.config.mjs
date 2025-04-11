@@ -19,9 +19,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    unoptimized: true,
-  },
+  // Sử dụng tối ưu hóa hình ảnh của Next.js
+  // images: {
+  //   unoptimized: true,
+  // },
   experimental: {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,

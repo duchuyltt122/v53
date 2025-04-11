@@ -2,7 +2,8 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
-import type { Product } from "@/data/products"
+// Không import Product từ data/products nữa
+// import type { Product } from "@/data/products"
 
 export type CartItem = {
   id: string
@@ -13,9 +14,19 @@ export type CartItem = {
   quantity: number
 }
 
+// Định nghĩa kiểu dữ liệu cho sản phẩm được thêm vào giỏ hàng
+export type CartProduct = {
+  id: string
+  name: { vi: string; en: string }
+  price: number
+  salePrice?: number
+  image: string
+  quantity: number
+}
+
 type CartContextType = {
   items: CartItem[]
-  addItem: (product: Product, quantity: number) => void
+  addItem: (product: CartProduct) => void
   removeItem: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   clearCart: () => void
@@ -54,14 +65,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isClient])
 
-  const addItem = (product: Product, quantity: number) => {
+  const addItem = (product: CartProduct) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id)
 
       if (existingItem) {
         // Update quantity if item already exists
         return prevItems.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item,
+          item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item,
         )
       } else {
         // Add new item
@@ -72,8 +83,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             name: product.name,
             price: product.price,
             salePrice: product.salePrice,
-            image: product.images[0].src,
-            quantity,
+            image: product.image,
+            quantity: product.quantity,
           },
         ]
       }

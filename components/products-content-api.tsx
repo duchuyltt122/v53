@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -17,11 +16,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { useLanguage } from "@/contexts/language-context"
-import { products } from "@/data/products"
-import type { Product } from "@/data/products"
 import { useCart } from "@/contexts/cart-context"
+import { getAllProducts, getProductCategories } from "@/services/product-service"
+import { AppProduct } from "@/types/products"
 
-export default function ProductsContent() {
+export default function ProductsContentApi() {
   const { language, t } = useLanguage()
   const { addItem } = useCart()
   const [showFilters, setShowFilters] = useState(false)
@@ -29,74 +28,103 @@ export default function ProductsContent() {
   const [displayCount, setDisplayCount] = useState("12")
   const [quantities, setQuantities] = useState<Record<string, number>>({})
   const [isClient, setIsClient] = useState(false)
+  const [products, setProducts] = useState<AppProduct[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  // Đảm bảo hydration đúng
+  // Lấy danh mục sản phẩm
+  const categories = getProductCategories();
+
+  // Đảm bảo hydration đúng và lấy dữ liệu sản phẩm
   useEffect(() => {
     setIsClient(true)
 
-    // Initialize quantities for all products
-    const initialQuantities: Record<string, number> = {}
-    products.forEach((product) => {
-      initialQuantities[product.id] = 1
-    })
-    setQuantities(initialQuantities)
-  }, [])
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching products...');
+        const productsData = await getAllProducts();
+        console.log('Products data:', productsData);
+        setProducts(productsData);
 
-  // Sample product categories
-  const categories = [
-    { id: 1, name: t("footer.lamps") },
-    { id: 2, name: t("footer.decor") },
-    { id: 3, name: t("footer.furniture") },
-    { id: 4, name: t("footer.gifts") },
-    { id: 5, name: t("footer.others") },
-  ]
+        // Initialize quantities for all products
+        const initialQuantities: Record<string, number> = {};
+        productsData.forEach((product) => {
+          initialQuantities[product.id] = 1;
+        });
+        setQuantities(initialQuantities);
+
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setError("Failed to load products. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   // Sort products based on selected option
   const sortedProducts = [...products].sort((a, b) => {
     switch (sortOption) {
       case "price-asc":
-        return a.price - b.price
+        return a.price - b.price;
       case "price-desc":
-        return b.price - a.price
+        return b.price - a.price;
       case "name-asc":
-        return language === "vi" ? a.name.vi.localeCompare(b.name.vi) : a.name.en.localeCompare(b.name.en)
+        return language === "vi" ? a.name.vi.localeCompare(b.name.vi) : a.name.en.localeCompare(b.name.en);
       case "name-desc":
-        return language === "vi" ? b.name.vi.localeCompare(a.name.vi) : b.name.en.localeCompare(a.name.en)
+        return language === "vi" ? b.name.vi.localeCompare(a.name.vi) : b.name.en.localeCompare(a.name.en);
       default:
-        return 0
+        return 0;
     }
-  })
+  });
 
   // Limit products based on display count
-  const displayedProducts = sortedProducts.slice(0, Number.parseInt(displayCount))
+  const displayedProducts = sortedProducts.slice(0, Number.parseInt(displayCount));
 
-  const handleQuickAddToCart = (product: Product, event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
-    const quantity = quantities[product.id] || 1
-    addItem(product, quantity)
-  }
+  const handleQuickAddToCart = (product: AppProduct, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const quantity = quantities[product.id] || 1;
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      salePrice: product.salePrice,
+      image: product.images[0]?.src,
+      quantity: quantity
+    });
+  };
 
   const increaseQuantity = (productId: string, event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
+    event.preventDefault();
+    event.stopPropagation();
     setQuantities((prev) => ({
       ...prev,
       [productId]: (prev[productId] || 1) + 1,
-    }))
-  }
+    }));
+  };
 
   const decreaseQuantity = (productId: string, event: React.MouseEvent) => {
-    event.preventDefault()
-    event.stopPropagation()
+    event.preventDefault();
+    event.stopPropagation();
     setQuantities((prev) => ({
       ...prev,
       [productId]: Math.max(1, (prev[productId] || 1) - 1),
-    }))
-  }
+    }));
+  };
+
+  // Format currency based on language
+  const formatCurrency = (price: number) => {
+    return language === "vi"
+      ? `${price.toLocaleString('vi-VN')}₫`
+      : `$${(price / 23000).toFixed(2)}`;
+  };
 
   // Nếu chưa hydrate xong, không render gì cả
-  if (!isClient) return null
+  if (!isClient) return null;
 
   return (
     <>
@@ -173,7 +201,7 @@ export default function ProductsContent() {
                             className="flex items-center text-sm hover:text-green-700"
                           >
                             <ChevronRight className="h-4 w-4 mr-2 text-green-700" />
-                            {category.name}
+                            {language === "vi" ? category.name.vi : category.name.en}
                           </Link>
                         </li>
                       ))}
@@ -269,7 +297,7 @@ export default function ProductsContent() {
                         className="flex items-center text-sm hover:text-green-700"
                       >
                         <ChevronRight className="h-4 w-4 mr-2 text-green-700" />
-                        {category.name}
+                        {language === "vi" ? category.name.vi : category.name.en}
                       </Link>
                     </li>
                   ))}
@@ -357,7 +385,7 @@ export default function ProductsContent() {
                     <div key={`featured-${product.id}`} className="flex gap-2">
                       <div className="w-16 h-16 relative">
                         <Image
-                          src={product.images[0].src || "/placeholder.svg"}
+                          src={product.images[0]?.src || "/placeholder.svg"}
                           alt={language === "vi" ? product.name.vi : product.name.en}
                           fill
                           sizes="64px"
@@ -372,7 +400,7 @@ export default function ProductsContent() {
                           </Link>
                         </h4>
                         <p className="text-xs text-red-600 font-medium">
-                          {product.salePrice ? product.salePrice.toLocaleString() : product.price.toLocaleString()}₫
+                          {formatCurrency(product.salePrice || product.price)}
                         </p>
                       </div>
                     </div>
@@ -424,108 +452,153 @@ export default function ProductsContent() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
-                {displayedProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="border border-gray-200 rounded overflow-hidden group hover:shadow-md transition-shadow"
-                  >
-                    <Link href={`/san-pham/${product.id}`} className="block">
-                      <div className="relative h-36 sm:h-40 md:h-48 overflow-hidden">
-                        <Image
-                          src={product.images[0].src || "/placeholder.svg"}
-                          alt={language === "vi" ? product.name.vi : product.name.en}
-                          fill
-                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="p-2 sm:p-3">
-                        <div className="text-xs text-gray-500 mb-1">
-                          {language === "vi" ? product.category.name.vi : product.category.name.en}
-                        </div>
-                        <h3 className="text-sm font-medium mb-2 line-clamp-2 group-hover:text-green-700">
-                          {language === "vi" ? product.name.vi : product.name.en}
-                        </h3>
+              {/* Loading state */}
+              {loading && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <div key={index} className="border border-gray-200 rounded overflow-hidden animate-pulse">
+                      <div className="h-36 sm:h-40 md:h-48 bg-gray-200"></div>
+                      <div className="p-2 sm:p-3 space-y-2">
+                        <div className="h-2 bg-gray-200 rounded w-1/3"></div>
+                        <div className="h-4 bg-gray-200 rounded w-2/3"></div>
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-red-600 font-medium">
-                            {product.salePrice ? product.salePrice.toLocaleString() : product.price.toLocaleString()}₫
-                          </span>
+                          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                          <div className="h-6 bg-gray-200 rounded w-12"></div>
                         </div>
-                      </div>
-                    </Link>
-
-                    {/* Quantity selector and Add to Cart button */}
-                    <div className="p-2 sm:p-3 pt-0 border-t border-gray-100" onClick={(e) => e.stopPropagation()}>
-                      <div className="flex flex-col gap-2">
-                        {/* Quantity selector */}
-                        <div className="flex items-center justify-between w-full">
-                          <span className="text-xs text-gray-500">{language === "vi" ? "Số lượng:" : "Quantity:"}</span>
-                          <div className="flex items-center border border-gray-300 rounded-sm">
-                            <button
-                              className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100"
-                              onClick={(e) => decreaseQuantity(product.id, e)}
-                            >
-                              <Minus className="h-3 w-3" />
-                            </button>
-                            <span className="w-8 h-8 flex items-center justify-center text-xs">
-                              {quantities[product.id] || 1}
-                            </span>
-                            <button
-                              className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100"
-                              onClick={(e) => increaseQuantity(product.id, e)}
-                            >
-                              <Plus className="h-3 w-3" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Add to cart button */}
-                        <Button
-                          className="bg-green-700 hover:bg-green-800 text-xs h-8 w-full rounded-sm"
-                          onClick={(e) => handleQuickAddToCart(product, e)}
-                        >
-                          <ShoppingCart className="h-3 w-3 mr-1" />
-                          {language === "vi" ? "THÊM VÀO GIỎ" : "ADD TO CART"}
-                        </Button>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Error state */}
+              {error && (
+                <div className="text-center py-8">
+                  <p className="text-red-500 mb-4">{error}</p>
+                  <Button
+                    className="bg-green-700 hover:bg-green-800"
+                    onClick={() => window.location.reload()}
+                  >
+                    {language === "vi" ? "Thử lại" : "Try Again"}
+                  </Button>
+                </div>
+              )}
+
+              {/* Products grid */}
+              {!loading && !error && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+                  {displayedProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="border border-gray-200 rounded overflow-hidden group hover:shadow-md transition-shadow"
+                    >
+                      <Link href={`/san-pham/${product.id}`} className="block">
+                        <div className="relative h-36 sm:h-40 md:h-48 overflow-hidden">
+                          <Image
+                            src={product.images[0]?.src || "/placeholder.svg"}
+                            alt={language === "vi" ? product.name.vi : product.name.en}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-2 sm:p-3">
+                          <div className="text-xs text-gray-500 mb-1">
+                            {language === "vi" ? product.category.name.vi : product.category.name.en}
+                          </div>
+                          <h3 className="text-sm font-medium mb-2 line-clamp-2 group-hover:text-green-700">
+                            {language === "vi" ? product.name.vi : product.name.en}
+                          </h3>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm text-red-600 font-medium">
+                              {formatCurrency(product.salePrice || product.price)}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+
+                      {/* Quantity selector and Add to Cart button */}
+                      <div className="p-2 sm:p-3 pt-0 border-t border-gray-100" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex flex-col gap-2">
+                          {/* Quantity selector */}
+                          <div className="flex items-center justify-between w-full">
+                            <span className="text-xs text-gray-500">{language === "vi" ? "Số lượng:" : "Quantity:"}</span>
+                            <div className="flex items-center border border-gray-300 rounded-sm">
+                              <button
+                                className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100"
+                                onClick={(e) => decreaseQuantity(product.id, e)}
+                              >
+                                <Minus className="h-3 w-3" />
+                              </button>
+                              <span className="w-8 h-8 flex items-center justify-center text-xs">
+                                {quantities[product.id] || 1}
+                              </span>
+                              <button
+                                className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-100"
+                                onClick={(e) => increaseQuantity(product.id, e)}
+                              >
+                                <Plus className="h-3 w-3" />
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Add to cart button */}
+                          <Button
+                            className="bg-green-700 hover:bg-green-800 text-xs h-8 w-full rounded-sm"
+                            onClick={(e) => handleQuickAddToCart(product, e)}
+                          >
+                            <ShoppingCart className="h-3 w-3 mr-1" />
+                            {language === "vi" ? "THÊM VÀO GIỎ" : "ADD TO CART"}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Empty state */}
+              {!loading && !error && displayedProducts.length === 0 && (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 mb-4">
+                    {language === "vi" ? "Không tìm thấy sản phẩm nào." : "No products found."}
+                  </p>
+                </div>
+              )}
 
               {/* Pagination */}
-              <div className="flex justify-center mt-6 md:mt-8">
-                <nav className="flex items-center gap-1">
-                  <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
-                    <ChevronLeft className="h-4 w-4" />
-                    <span className="sr-only">Previous page</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="w-8 h-8 rounded-sm bg-green-700 text-white hover:bg-green-800"
-                  >
-                    1
-                  </Button>
-                  <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
-                    2
-                  </Button>
-                  <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
-                    3
-                  </Button>
-                  <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
-                    <ChevronRight className="h-4 w-4" />
-                    <span className="sr-only">Next page</span>
-                  </Button>
-                </nav>
-              </div>
+              {!loading && !error && displayedProducts.length > 0 && (
+                <div className="flex justify-center mt-6 md:mt-8">
+                  <nav className="flex items-center gap-1">
+                    <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
+                      <ChevronLeft className="h-4 w-4" />
+                      <span className="sr-only">Previous page</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="w-8 h-8 rounded-sm bg-green-700 text-white hover:bg-green-800"
+                    >
+                      1
+                    </Button>
+                    <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
+                      2
+                    </Button>
+                    <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
+                      3
+                    </Button>
+                    <Button variant="outline" size="icon" className="w-8 h-8 rounded-sm">
+                      <ChevronRight className="h-4 w-4" />
+                      <span className="sr-only">Next page</span>
+                    </Button>
+                  </nav>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
-

@@ -76,7 +76,20 @@
 }
 
 .text-shadow-sm {
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+/* Nếu muốn viền đậm hơn */
+.text-shadow-lg {
+  text-shadow: 
+    -2px -2px 0 #000,  
+     2px -2px 0 #000,
+    -2px  2px 0 #000,
+     2px  2px 0 #000;
 }
 
 @layer utilities {
@@ -99,4 +112,5 @@
     }
   }
 }
+
 

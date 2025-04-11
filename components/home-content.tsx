@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useLanguage } from "@/contexts/language-context"
 import { Suspense } from "react"
+import { FeaturedProductsApi } from "./featured-products-api"
 
 export default function HomeContent() {
   const { language } = useLanguage()
@@ -18,15 +19,15 @@ export default function HomeContent() {
           fill
           sizes="100vw"
           priority
-          className="object-cover"
+          className="attachment-original size-original"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center">
+        <div className="absolute inset-0 flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Taboo Bamboo Workshop</h1>
-              <p className="text-xl text-white mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">Taboo Bamboo Workshop</h1>
+              <p className="text-xl text-black mb-8">
                 {language === "vi"
                   ? "Nghệ thuật thủ công tre truyền thống tại Hội An"
                   : "Traditional bamboo craftsmanship in Hoi An"}
@@ -43,7 +44,31 @@ export default function HomeContent() {
       </div>
 
       {/* Featured Products */}
-      <div className="py-16 bg-white">
+      <Suspense
+        fallback={
+          <div className="py-16 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="text-3xl font-bold text-center mb-12">
+                {language === "vi" ? "Sản phẩm nổi bật" : "Featured Products"}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="bg-gray-200 h-80 mb-4 rounded-lg"></div>
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <FeaturedProductsApi />
+      </Suspense>
+
+      {/* Hidden for replacement with API data */}
+      {false && (<div className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">
             {language === "vi" ? "Sản phẩm nổi bật" : "Featured Products"}
@@ -85,83 +110,9 @@ export default function HomeContent() {
                 </svg>
               </Link>
             </div>
-
-            {/* Product 2 */}
-            <div className="group">
-              <div className="relative h-80 mb-4 overflow-hidden rounded-lg">
-                <Image
-                  src="/placeholder.svg?height=320&width=240"
-                  alt="Bamboo Basket"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="text-xl font-medium mb-2">
-                {language === "vi" ? "Giỏ tre đan thủ công" : "Handwoven Bamboo Basket"}
-              </h3>
-              <p className="text-gray-600 mb-3">
-                {language === "vi"
-                  ? "Giỏ tre đan thủ công tinh xảo, kết hợp giữa tính thẩm mỹ và công năng sử dụng."
-                  : "Exquisitely handwoven bamboo basket, combining aesthetics and functionality."}
-              </p>
-              <Link
-                href="/san-pham/2"
-                className="text-green-600 hover:text-green-800 font-medium inline-flex items-center"
-              >
-                {language === "vi" ? "Xem chi tiết" : "View Details"}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Product 3 */}
-            <div className="group">
-              <div className="relative h-80 mb-4 overflow-hidden rounded-lg">
-                <Image
-                  src="/placeholder.svg?height=320&width=240"
-                  alt="Bamboo Furniture"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="text-xl font-medium mb-2">
-                {language === "vi" ? "Nội thất tre cao cấp" : "Premium Bamboo Furniture"}
-              </h3>
-              <p className="text-gray-600 mb-3">
-                {language === "vi"
-                  ? "Bộ sưu tập nội thất tre cao cấp, bền đẹp và thân thiện với môi trường."
-                  : "Collection of premium bamboo furniture, durable, beautiful, and eco-friendly."}
-              </p>
-              <Link
-                href="/san-pham/4"
-                className="text-green-600 hover:text-green-800 font-medium inline-flex items-center"
-              >
-                {language === "vi" ? "Xem chi tiết" : "View Details"}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 ml-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
           </div>
         </div>
-      </div>
+      </div>)}
 
       {/* About Section */}
       <div className="py-16 bg-gray-50">
@@ -427,4 +378,6 @@ function Testimonials({ language }: { language: string }) {
     </div>
   )
 }
+
+
 

@@ -6,7 +6,7 @@ export default function Loading() {
       <div className="flex flex-col items-center p-8 rounded-lg">
         <div className="relative w-24 h-24 mb-4">
           <Image
-            src="/placeholder.svg?height=100&width=100"
+            src="https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img/logo.png"
             alt="Taboo Logo"
             width={100}
             height={100}
@@ -23,4 +23,5 @@ export default function Loading() {
     </div>
   )
 }
+
 

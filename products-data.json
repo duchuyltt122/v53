@@ -1,0 +1,121 @@
+[
+  {
+    "id": "b6af5aec-794b-43d6-a1f6-2207717ce975",
+    "name": {
+      "en": "Bamboo Tea Storage Box",
+      "vi": "Hộp đựng trà bằng tre"
+    },
+    "price": {
+      "usd": 10.49,
+      "vnd": 259000
+    },
+    "short_description": {
+      "en": "The tea storage box is made from natural bamboo, with a sealed design that helps preserve tea aroma.",
+      "vi": "Hộp đựng trà được làm từ tre tự nhiên, thiết kế kín giúp giữ hương trà lâu."
+    },
+    "full_description": {
+      "en": "The bamboo tea box is an ideal choice for tea lovers, preserving aroma and adding a touch of elegance to your space.",
+      "vi": "Hộp đựng trà bằng tre là sự lựa chọn lý tưởng cho người yêu trà, giúp lưu giữ hương vị và tạo điểm nhấn trang nhã cho không gian."
+    },
+    "specifications": {
+      "en": "Dimensions:\\n10x10x12cm\\nMaterial:\\nNatural bamboo\\nOrigin:\\nVietnam\\nPreservation:\\nStore in a dry, cool place",
+      "vi": "Kích thước:\\n10x10x12cm\\nChất liệu:\\nTre tự nhiên\\nXuất xứ:\\nViệt Nam\\nBảo quản:\\nĐể nơi khô ráo, thoáng mát"
+    },
+    "youtube_url": "https://www.youtube.com/shorts/mnx1Mw_y9X0",
+    "created_at": "2025-04-06T01:40:24.962983+00:00",
+    "image_urls": [
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg"
+    ]
+  },
+  {
+    "id": "4e8d47d6-8e52-4d9d-a58e-1f2d8d37087b",
+    "name": {
+      "en": "Handcrafted product Ong Vàng (Golden Bee)",
+      "vi": "Sản phẩm thủ công mỹ nghệ Ong Vàng"
+    },
+    "price": {
+      "usd": 15.99,
+      "vnd": 399000
+    },
+    "short_description": {
+      "en": "The handcrafted product Ong Vàng (Golden Bee) is made from aged bamboo, processed through meticulous natural and manual methods. The product has a natural yellow color and remains beautiful and durable over time.",
+      "vi": "Sản phẩm thủ công mỹ nghệ Ong Vàng được làm từ tre già, qua quá trình xử lý tự nhiên và thủ công tỉ mỉ. Sản phẩm có màu vàng tự nhiên, bền đẹp theo thời gian."
+    },
+    "full_description": {
+      "en": "The handcrafted product Ong Vàng (Golden Bee) is a representative product of traditional craftsmanship, made from mature bamboo trees aged 3–5 years.\\nThe product can be used as decoration, souvenir, or gift with good feng shui meaning.",
+      "vi": "Sản phẩm thủ công mỹ nghệ Ong Vàng là sản phẩm tiêu biểu của làng nghề truyền thống, được chế tác từ những cây tre già từ 3-5 năm tuổi.\\nSản phẩm có thể dùng làm đồ trang trí, lưu niệm hoặc quà tặng với ý nghĩa phong thủy tốt đẹp."
+    },
+    "specifications": {
+      "en": "Dimensions:\\n5cm diameter, 20cm length\\nMaterial:\\nNatural mature bamboo\\nOrigin:\\nVietnam\\nPreservation:\\nAvoid direct sunlight and humid places",
+      "vi": "Kích thước:\\nĐường kính 5cm, dài 20cm\\nChất liệu:\\nTre già tự nhiên\\nXuất xứ:\\nViệt Nam\\nBảo quản:\\nTránh ánh nắng trực tiếp, nơi ẩm ướt"
+    },
+    "youtube_url": "https://www.youtube.com/watch?v=v2v6Pd_YXZM",
+    "created_at": "2025-04-06T01:56:24.915651+00:00",
+    "image_urls": [
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg"
+    ]
+  },
+  {
+    "id": "0a3a5e06-2791-4a9d-8d8b-029615f2d382",
+    "name": {
+      "en": "Handcrafted Bamboo Lantern",
+      "vi": "Lồng đèn tre thủ công"
+    },
+    "price": {
+      "usd": 19.99,
+      "vnd": 499000
+    },
+    "short_description": {
+      "en": "Handcrafted bamboo lantern combining traditional and modern styles.",
+      "vi": "Lồng đèn tre được làm hoàn toàn thủ công, mang phong cách truyền thống pha hiện đại."
+    },
+    "full_description": {
+      "en": "The handcrafted bamboo lantern is an ideal decoration for living spaces, cafes, or homestays with an oriental touch.",
+      "vi": "Lồng đèn tre thủ công là sản phẩm trang trí lý tưởng cho không gian sống, quán cà phê, homestay mang đậm nét Á Đông."
+    },
+    "specifications": {
+      "en": "Dimensions:\\n30cm x 45cm\\nMaterial:\\nNatural bamboo\\nOrigin:\\nHoi An, Vietnam\\nPreservation:\\nAvoid direct sunlight or rain",
+      "vi": "Kích thước:\\n30cm x 45cm\\nChất liệu:\\nTre tự nhiên\\nXuất xứ:\\nHội An, Việt Nam\\nBảo quản:\\nTránh mưa nắng trực tiếp"
+    },
+    "youtube_url": "https://www.youtube.com/watch?v=v2v6Pd_YXZM",
+    "created_at": "2025-04-06T01:40:24.962983+00:00",
+    "image_urls": [
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg",
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang_1.jpg"
+    ]
+  },
+  {
+    "id": "71ba32e7-83da-4037-b80b-7c479231888f",
+    "name": {
+      "en": "Handcrafted Golden Bamboo Tube",
+      "vi": "Ống vàng thủ công mỹ nghệ"
+    },
+    "price": {
+      "usd": 15.99,
+      "vnd": 399000
+    },
+    "short_description": {
+      "en": "Handcrafted golden bamboo tube made from mature bamboo, processed naturally and meticulously handcrafted. The product has a natural golden color that remains beautiful over time.",
+      "vi": "Ống vàng thủ công mỹ nghệ được làm từ tre già, qua quá trình xử lý tự nhiên và thủ công tỉ mỉ. Sản phẩm có màu vàng tự nhiên, bền đẹp theo thời gian."
+    },
+    "full_description": {
+      "en": "The handcrafted golden bamboo tube is a representative product of traditional craftsmanship, made from mature bamboo trees aged 3–5 years.\\nThe product can be used as decoration, souvenir, or gift with good feng shui meaning.",
+      "vi": "Ống vàng thủ công mỹ nghệ là sản phẩm tiêu biểu của làng nghề truyền thống, được chế tác từ những cây tre già từ 3-5 năm tuổi.\\nSản phẩm có thể dùng làm đồ trang trí, lưu niệm hoặc quà tặng với ý nghĩa phong thủy tốt đẹp."
+    },
+    "specifications": {
+      "en": "Dimensions:\\n5cm diameter, 20cm length\\nMaterial:\\nNatural mature bamboo\\nOrigin:\\nVietnam\\nPreservation:\\nAvoid direct sunlight and humid places",
+      "vi": "Kích thước:\\nĐường kính 5cm, dài 20cm\\nChất liệu:\\nTre già tự nhiên\\nXuất xứ:\\nViệt Nam\\nBảo quản:\\nTránh ánh nắng trực tiếp, nơi ẩm ướt"
+    },
+    "youtube_url": "https://www.youtube.com/shorts/mnx1Mw_y9X0",
+    "created_at": "2025-04-06T01:40:24.962983+00:00",
+    "image_urls": [
+      "https://ipaionbpmtgtfmlkkaer.supabase.co/storage/v1/object/public/taboo-img//ong_vang.jpg"
+    ]
+  }
+]

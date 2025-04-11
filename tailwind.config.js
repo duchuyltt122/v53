@@ -1,5 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // Tối ưu hóa hiệu suất
+  future: {
+    hoverOnlyWhenSupported: true, // Chỉ sử dụng hover trên các thiết bị hỗ trợ
+    respectDefaultRingColorOpacity: true, // Tôn trọng opacity mặc định của ring color
+    disableColorOpacityUtilitiesByDefault: true, // Tắt các tiện ích opacity màu mặc định
+    removeDeprecatedGapUtilities: true, // Loại bỏ các tiện ích gap đã lỗi thời
+  },
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -74,5 +81,17 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+
+  // Tối ưu hóa hiệu suất
+  safelist: [],
+  blocklist: [],
+
+  // Tối ưu hóa bundle size
+  corePlugins: {
+    // Tắt các core plugins không sử dụng để giảm bundle size
+    // container: false, // Nếu bạn không sử dụng container
+    // opacity: false, // Nếu bạn không sử dụng opacity
+    // cursor: false, // Nếu bạn không sử dụng cursor
+  },
 }
 

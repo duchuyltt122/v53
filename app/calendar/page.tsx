@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, CalendarIcon, Info } from "lucide-react"
 import {
@@ -18,22 +18,10 @@ import Footer from "@/components/footer"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import WorkshopRegistrationForm from "@/components/workshop-registration-form"
+import { getAllWorkshops } from "@/services/workshop-service"
 
-// Define the workshop type based on the new data structure
-type Workshop = {
-  id: number
-  title_vi: string
-  title_en: string
-  time: string
-  date: string
-  color: string
-  instructor_vi: string
-  instructor_en: string
-  total_slots: number
-  available_slots: number
-  price_vnd: number // Giá VND
-  price_usd: number // Giá USD
-}
+// Import Workshop type from types folder
+import { Workshop } from "@/types/workshops"
 
 export default function CalendarPage() {
   const { t, language } = useLanguage()
@@ -43,8 +31,52 @@ export default function CalendarPage() {
   const [showInfoDialog, setShowInfoDialog] = useState(false)
   const [activeTab, setActiveTab] = useState<string>("calendar")
 
-  // Sample workshop data with the new format
-  const workshops: Workshop[] = [
+  // State for workshops data
+  const [workshops, setWorkshops] = useState<Workshop[]>([])
+  const [loading, setLoading] = useState(true)
+
+  // Fetch workshops data from API
+  useEffect(() => {
+    const fetchWorkshops = async () => {
+      try {
+        setLoading(true)
+        const data = await getAllWorkshops()
+        setWorkshops(data)
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching workshops:', error)
+        setLoading(false)
+      }
+    }
+
+    fetchWorkshops()
+  }, [])
+
+  // Loading state for calendar
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <TopBar />
+        <Header />
+        <div className="flex-1 bg-[#f0f0f0] py-8">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="bg-white p-6 rounded-lg shadow-lg border-4 border-black">
+                <div className="flex justify-center items-center h-[400px]">
+                  <div className="w-12 h-12 rounded-full border-4 border-green-600 border-t-transparent animate-spin"></div>
+                  <span className="ml-3 text-lg font-medium">{language === "vi" ? "Đang tải lịch workshop..." : "Loading workshop calendar..."}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
+
+  // For debugging only - not used in production
+  const _sampleWorkshops: Workshop[] = [
     {
       id: 1,
       title_vi: "Làm đèn tre cơ bản",

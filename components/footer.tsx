@@ -13,7 +13,7 @@ export default function Footer() {
   const [email, setEmail] = useState("")
 
   return (
-    <footer className="bg-green-700 text-white pt-8 pb-4">
+    <footer className="bg-green-700 text-white pt-8 pb-4 w-full mt-auto">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div>

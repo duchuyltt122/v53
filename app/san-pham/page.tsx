@@ -3,7 +3,7 @@ import { Suspense } from "react"
 import TopBar from "@/components/top-bar"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
-import ProductsContent from "@/components/products-content"
+import ProductsContentApi from "@/components/products-content-api"
 import { LanguageProvider } from "@/contexts/language-context"
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function ProductsPage() {
 
         {/* Main Content - Tách thành client component riêng */}
         <Suspense fallback={<ProductsLoading />}>
-          <ProductsContent />
+          <ProductsContentApi />
         </Suspense>
 
         {/* Footer */}

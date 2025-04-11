@@ -149,7 +149,7 @@ export default function NewsDetailPage() {
           className="object-cover w-full h-full"
           priority
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center">
           <h1 className="text-3xl sm:text-4xl font-medium text-white">
             {language === "vi" ? "CHI TIẾT TIN TỨC" : "NEWS DETAIL"}
           </h1>

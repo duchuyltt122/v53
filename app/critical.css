@@ -1,0 +1,154 @@
+/* Critical CSS - Sẽ được nhúng inline trong <head> */
+
+/* Reset cơ bản */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Styles cơ bản cho body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Layout cơ bản */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Responsive container */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+/* Flex utilities */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+/* Spacing */
+.p-4 {
+  padding: 1rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Text */
+.text-center {
+  text-align: center;
+}
+.font-bold {
+  font-weight: 700;
+}
+.text-lg {
+  font-size: 1.125rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+/* Colors */
+.text-green-700 {
+  color: #15803d;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
+/* Animations */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Layout */
+.min-h-screen {
+  min-height: 100vh;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+/* Skeleton loading */
+.skeleton {
+  background-color: #f3f4f6;
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0)
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-position: left -100% top 0;
+  animation: skeleton-loading 1.5s ease infinite;
+}
+
+@keyframes skeleton-loading {
+  to {
+    background-position: right -100% top 0;
+  }
+}
