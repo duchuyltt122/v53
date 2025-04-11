@@ -27,6 +27,7 @@ const nextConfig = {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+    // Đảm bảo không có optimizeCss ở đây
   },
 }
 

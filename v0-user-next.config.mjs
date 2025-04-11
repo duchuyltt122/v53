@@ -23,9 +23,9 @@ const nextConfig = {
 
   // Cấu hình experimental
   experimental: {
-    optimizeCss: true, // Tối ưu hóa CSS
+    optimizeCss: true, // Đã thêm package critters vào dependencies
     scrollRestoration: true, // Khôi phục vị trí scroll khi quay lại trang
-    legacyBrowsers: false, // Không hỗ trợ trình duyệt cũ để giảm bundle size
+    // legacyBrowsers: false, // Không hỗ trợ trình duyệt cũ để giảm bundle size
   },
 };
 
